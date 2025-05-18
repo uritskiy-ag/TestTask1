@@ -1,0 +1,344 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 17.5 (Debian 17.5-1.pgdg120+1)
+-- Dumped by pg_dump version 17.5 (Debian 17.5-1.pgdg120+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: measurements; Type: TABLE; Schema: public; Owner: squirrel
+--
+
+CREATE TABLE public.measurements (
+    raw_material_id integer NOT NULL,
+    fe_amount double precision,
+    si_amount double precision,
+    al_amount double precision,
+    ca_amount double precision,
+    s_amount double precision,
+    measure_date date NOT NULL,
+    id integer NOT NULL,
+    create_date timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    create_user integer,
+    update_date timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    update_user integer,
+    year integer,
+    month integer
+);
+
+
+ALTER TABLE public.measurements OWNER TO squirrel;
+
+--
+-- Name: measurements_id_seq; Type: SEQUENCE; Schema: public; Owner: squirrel
+--
+
+CREATE SEQUENCE public.measurements_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.measurements_id_seq OWNER TO squirrel;
+
+--
+-- Name: measurements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: squirrel
+--
+
+ALTER SEQUENCE public.measurements_id_seq OWNED BY public.measurements.id;
+
+
+--
+-- Name: raw_material; Type: TABLE; Schema: public; Owner: squirrel
+--
+
+CREATE TABLE public.raw_material (
+    id integer NOT NULL,
+    create_date timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    create_user integer,
+    update_date timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    update_user integer,
+    name character varying NOT NULL
+);
+
+
+ALTER TABLE public.raw_material OWNER TO squirrel;
+
+--
+-- Name: raw_material_id_seq; Type: SEQUENCE; Schema: public; Owner: squirrel
+--
+
+CREATE SEQUENCE public.raw_material_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.raw_material_id_seq OWNER TO squirrel;
+
+--
+-- Name: raw_material_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: squirrel
+--
+
+ALTER SEQUENCE public.raw_material_id_seq OWNED BY public.raw_material.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: squirrel
+--
+
+CREATE TABLE public.users (
+    login character varying NOT NULL,
+    name character varying NOT NULL,
+    password character varying,
+    pass_hash character varying,
+    id integer NOT NULL,
+    create_date timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    create_user integer,
+    update_date timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    update_user integer,
+    active boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO squirrel;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: squirrel
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.users_id_seq OWNER TO squirrel;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: squirrel
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: measurements id; Type: DEFAULT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.measurements ALTER COLUMN id SET DEFAULT nextval('public.measurements_id_seq'::regclass);
+
+
+--
+-- Name: raw_material id; Type: DEFAULT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.raw_material ALTER COLUMN id SET DEFAULT nextval('public.raw_material_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: measurements; Type: TABLE DATA; Schema: public; Owner: squirrel
+--
+
+COPY public.measurements (raw_material_id, fe_amount, si_amount, al_amount, ca_amount, s_amount, measure_date, id, create_date, create_user, update_date, update_user, year, month) FROM stdin;
+2	25	1	2	5	0.5	2025-01-19	6	2025-05-18 11:26:02.125568	2	2025-05-18 11:26:02.125568	2	2025	1
+1	50	0.05	0.5	0.1	0.01	2025-01-19	7	2025-05-18 11:27:02.593504	2	2025-05-18 11:27:02.593504	2	2025	1
+1	30	0.04	0.45	0.2	0.03	2025-02-10	8	2025-05-18 12:16:24.851729	1	2025-05-18 12:16:24.851729	1	2025	2
+1	15	1	1	1	1	2025-01-18	9	2025-05-18 14:03:01.684387	1	2025-05-18 14:03:01.684387	1	2025	1
+1	15	1	1	1	1	2025-02-18	18	2025-05-18 14:44:43.055624	2	2025-05-18 14:44:43.055624	2	2025	2
+\.
+
+
+--
+-- Data for Name: raw_material; Type: TABLE DATA; Schema: public; Owner: squirrel
+--
+
+COPY public.raw_material (id, create_date, create_user, update_date, update_user, name) FROM stdin;
+1	2025-05-18 09:44:04.59304	1	2025-05-18 09:44:04.59304	1	Iron ore concentrate
+2	2025-05-18 09:47:00.814824	1	2025-05-18 09:47:00.814824	1	Copper ore concentrate
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: squirrel
+--
+
+COPY public.users (login, name, password, pass_hash, id, create_date, create_user, update_date, update_user, active) FROM stdin;
+vasiliy@mail.ru	Vasiliy	\N	$2b$12$KtoyuXwFSE5z6.jvZcWXn.iH2BzTfNGwak/bBjDeftSUM6Hx9LuWu	1	2025-05-18 09:41:57.455182	\N	2025-05-18 09:41:57.455182	\N	t
+maria@mail.ru	Maria	\N	$2b$12$cBTTwc4BWsieN75I1ipME.GpdE3zu1mQco1nkLg/PcdNXgsg3XgH6	2	2025-05-18 09:42:21.318391	\N	2025-05-18 09:42:21.318391	\N	t
+\.
+
+
+--
+-- Name: measurements_id_seq; Type: SEQUENCE SET; Schema: public; Owner: squirrel
+--
+
+SELECT pg_catalog.setval('public.measurements_id_seq', 18, true);
+
+
+--
+-- Name: raw_material_id_seq; Type: SEQUENCE SET; Schema: public; Owner: squirrel
+--
+
+SELECT pg_catalog.setval('public.raw_material_id_seq', 2, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: squirrel
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 2, true);
+
+
+--
+-- Name: measurements measurements_pkey; Type: CONSTRAINT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.measurements
+    ADD CONSTRAINT measurements_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: raw_material raw_material_pkey; Type: CONSTRAINT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.raw_material
+    ADD CONSTRAINT raw_material_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: measurements uix_raw_material_measure_date; Type: CONSTRAINT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.measurements
+    ADD CONSTRAINT uix_raw_material_measure_date UNIQUE (raw_material_id, measure_date);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ix_measurements_month; Type: INDEX; Schema: public; Owner: squirrel
+--
+
+CREATE INDEX ix_measurements_month ON public.measurements USING btree (month);
+
+
+--
+-- Name: ix_measurements_year; Type: INDEX; Schema: public; Owner: squirrel
+--
+
+CREATE INDEX ix_measurements_year ON public.measurements USING btree (year);
+
+
+--
+-- Name: ix_users_login; Type: INDEX; Schema: public; Owner: squirrel
+--
+
+CREATE UNIQUE INDEX ix_users_login ON public.users USING btree (login);
+
+
+--
+-- Name: ix_users_name; Type: INDEX; Schema: public; Owner: squirrel
+--
+
+CREATE INDEX ix_users_name ON public.users USING btree (name);
+
+
+--
+-- Name: measurements measurements_create_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.measurements
+    ADD CONSTRAINT measurements_create_user_fkey FOREIGN KEY (create_user) REFERENCES public.users(id);
+
+
+--
+-- Name: measurements measurements_raw_material_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.measurements
+    ADD CONSTRAINT measurements_raw_material_id_fkey FOREIGN KEY (raw_material_id) REFERENCES public.raw_material(id);
+
+
+--
+-- Name: measurements measurements_update_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.measurements
+    ADD CONSTRAINT measurements_update_user_fkey FOREIGN KEY (update_user) REFERENCES public.users(id);
+
+
+--
+-- Name: raw_material raw_material_create_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.raw_material
+    ADD CONSTRAINT raw_material_create_user_fkey FOREIGN KEY (create_user) REFERENCES public.users(id);
+
+
+--
+-- Name: raw_material raw_material_update_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.raw_material
+    ADD CONSTRAINT raw_material_update_user_fkey FOREIGN KEY (update_user) REFERENCES public.users(id);
+
+
+--
+-- Name: users users_create_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_create_user_fkey FOREIGN KEY (create_user) REFERENCES public.users(id);
+
+
+--
+-- Name: users users_update_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: squirrel
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_update_user_fkey FOREIGN KEY (update_user) REFERENCES public.users(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

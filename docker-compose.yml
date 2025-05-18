@@ -1,0 +1,41 @@
+# Ansible managed
+version: '2.4'
+
+services:
+  back:
+    build:
+      context: './docker/back'
+    restart: unless-stopped
+    mem_limit: 1024m
+    memswap_limit: 1024m
+    volumes:
+      - "./app:/code/app"
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+    networks:
+      - squirrel_default
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - SECRET_KEY
+      - ALGORITHM
+  db:
+    image: postgres:17.5
+    restart: unless-stopped
+    mem_limit: 512m
+    memswap_limit: 512m
+    volumes:
+      - "./pg_data:/var/lib/postgresql/data"
+      - "./test_data_dump:/tmp"
+    networks:
+      - squirrel_default
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+
+networks:
+  squirrel_default:
+
